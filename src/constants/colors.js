@@ -1,0 +1,5 @@
+export const AZULCLARO = "#c3cfd9"
+export const LARANJA = "#e8833a"
+export const AZULMAISCLARO = "#9EADBA"
+export const TEALCLARO = "#1aae9e"
+export const TEALESCURO = "#247a6b"
