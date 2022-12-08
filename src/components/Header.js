@@ -13,6 +13,9 @@ const StyledHeader = styled.header`
     width: 375px;
     height: 67px;
     background-color: ${AZULCLARO};
+    display: flex;
+    justify-content: center;
+    align-items: center;
     h1{
         color: ${LARANJA}
     }

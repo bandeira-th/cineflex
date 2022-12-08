@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { CINZAESCURO } from "./constants/colors";
 
 
 const GlobalStyled = createGlobalStyle`
@@ -29,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+    color: ${CINZAESCURO}
 }
 ol, ul {
 	list-style: none;
