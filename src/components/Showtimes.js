@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
-import { CINZAESCURO, LARANJA, BRANCO } from "../constants/colors"
+import { CINZAESCURO, LARANJA, BRANCO, AZULMAISCLARO } from "../constants/colors"
 
 export default function Showtimes() {
   const [showtimes, setShowTimes] = useState(undefined)
@@ -11,7 +11,7 @@ export default function Showtimes() {
 
   useEffect(()=>{
     const promisse = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`)
-    promisse.then(res => setShowTimes(res.data.days))
+    promisse.then(res => setShowTimes(res.data))
   },[])
   
   
@@ -21,33 +21,41 @@ export default function Showtimes() {
   }
   
   return(
-    <StyledShowtimes>
+    <>
+      <StyledShowtimes>
       <h1>Escolha o horário</h1>
-      {showtimes.map((showtime)=>{
+      {showtimes.days.map((day)=>{
         return(
-          <ShowtimeCard>
-            <p><span>{showtime.weekday}</span>- {showtime.date}</p>
-            <div>{showtime.showtimes.map((hour)=>{
-              return <button>{hour.name}</button>
+          <ShowtimeCard key={day.id}>
+            <p><span>{day.weekday}</span>- {day.date}</p>
+            <div>{day.showtimes.map((hour)=>{
+              return <button key={hour.id}>{hour.name}</button>
             })}
             </div>
           </ShowtimeCard>
           ) 
       })}
+    
     </StyledShowtimes>
+    <ShowtimeFooter>
+     <img src={showtimes.posterURL} />
+     <h2>{showtimes.title}</h2>
+    </ShowtimeFooter>
+    </>
+    
   )
 
 }
 
 const StyledShowtimes = styled.div`
   width: 375px;
-  height: 693px;
+  height: 450px;
   overflow-y: scroll;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 30px;
-  h1{
+  h1 {
     width: 100%;
     height: 110px;
     display: flex;
@@ -56,7 +64,27 @@ const StyledShowtimes = styled.div`
     font-size: 24px;
     font-weight: 400;
   }
+`;
+const ShowtimeFooter = styled.footer`
+  width: 375px;
+  background-color: ${AZULMAISCLARO};
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 14px 10px;
+  img{
+    width: 64px;
+    padding: 8px;
+    background-color: ${BRANCO};
+    border-radius: 2px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  
 `
+
 const ShowtimeCard = styled.div`
   width: 90%;
   margin-bottom: 23px;

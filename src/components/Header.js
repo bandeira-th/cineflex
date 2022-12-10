@@ -17,6 +17,7 @@ const StyledHeader = styled.header`
     justify-content: center;
     align-items: center;
     h1{
-        color: ${LARANJA}
+        color: ${LARANJA};
+        font-size: 34px;
     }
 `
