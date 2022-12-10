@@ -1,8 +1,13 @@
 import styled from "styled-components"
-import Header from "./Header"
+
+
+import { Link } from "react-router-dom"
 
 
 export default function MoviesPage({movies}) {
+
+    
+
     
 
     return (
@@ -11,7 +16,11 @@ export default function MoviesPage({movies}) {
             <StyledMoviesPage>
                 <h1>Selecione o filme</h1>
                 {movies.map((movie)=>{
-                    return <img src={movie.posterURL} alt="" />
+                    return(
+                      <Link to={`/showtimes/${movie.id}`} key={movie.name}>
+                        <img src={movie.posterURL} alt="fdsa"/>
+                      </Link>
+                    ) 
                 })}
 
             </StyledMoviesPage>
