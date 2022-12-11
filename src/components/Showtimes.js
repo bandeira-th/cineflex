@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import styled from "styled-components"
 import axios from "axios"
 import { CINZAESCURO, LARANJA, BRANCO, AZULMAISCLARO } from "../constants/colors"
 
-export default function Showtimes() {
-  const [showtimes, setShowTimes] = useState(undefined)
+export default function Showtimes({showtimes ,setShowTimes}) {
+  
 
   const {idFilme} = useParams()
 
@@ -29,7 +29,11 @@ export default function Showtimes() {
           <ShowtimeCard key={day.id}>
             <p><span>{day.weekday}</span>- {day.date}</p>
             <div>{day.showtimes.map((hour)=>{
-              return <button key={hour.id}>{hour.name}</button>
+              return(
+                <Link to={`/session/${hour.id}`} key={hour.id}>
+                  <button key={hour.id}>{hour.name}</button>
+                </Link>
+              ) 
             })}
             </div>
           </ShowtimeCard>

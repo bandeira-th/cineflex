@@ -5,10 +5,14 @@ import MoviesPage from "./components/MoviesPage";
 import axios from "axios";
 import Header from "./components/Header";
 import Showtimes from "./components/Showtimes";
+import Session from "./components/Session";
 
 
 export default function App() {
   const [movies, setMovies] = useState([])
+  const [showtimes, setShowTimes] = useState(undefined)
+  const [session, setSession] = useState(undefined)
+  
   
   
   useEffect(()=>{
@@ -24,8 +28,22 @@ export default function App() {
       <StyledApp>
         <Header/>
         <Routes>
-          <Route path="/" element={<MoviesPage movies={movies}/>}/>
-          <Route path="/showtimes/:idFilme" element={<Showtimes/>}/>
+          <Route 
+          path="/" 
+          element={<MoviesPage 
+          movies={movies}/>}
+          />
+          <Route 
+          path="/showtimes/:idFilme" 
+          element={<Showtimes showtimes={showtimes} 
+          setShowTimes={setShowTimes}/>}
+          />
+          <Route 
+          path="/session/:idSessao" 
+          element={<Session setSession={setSession} 
+          session={session}/>}
+           
+          />
         </Routes>
       </StyledApp>
     </BrowserRouter>
