@@ -6,33 +6,49 @@ import seatsObj from "../seatsObj"
 import { AZULCLARO, AMARELOCLARO } from "../constants/colors.js"
 
 export default function Session({session, setSession}) {
+    const [seats, setSeats] = useState([])
     const [selectedSeats, setSelectedSeats] = useState([])
     const [costumerName, setCostumerName] = useState("")
     const [constumerCPF, setCostumerCPF] = useState("")
-
+    const [unavailableSeats, setUnavailableSeats] = useState([])
+ 
     const {idSessao} = useParams()
+
+    const takenseats = []
 
     useEffect(()=>{
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
-        promisse.then(res => setSession(res.data))
+        promisse.then(res => {setSession(res.data); setSeats(res.data.seats)})
         promisse.catch(err => console.log(err))
     },[])
 
-    if (session === undefined){
-        return <h1>Carregando...</h1>
+
+
+    function markSeat(seat){
+        if(!seat.isAvailable){
+            alert("not")
+        } else if (seat.isAvailable){
+            const newSeats = [...selectedSeats]
+            setSelectedSeats([...newSeats, seat.name])
+        }
+
     }
 
 
+
+    if (session === undefined){
+        return <h1>Carregando...</h1>
+    } 
 
     return (
         <StyledSession>
             <h1>Selecione os assentos</h1>
             <SeatsContainer>
-                {session.seats.map((seat)=>{
-                    return <StyledSeatBtn isAvailable={seat.isAvailable}>{seat.name}</StyledSeatBtn>
+                {seats.map((seat)=>{
+                    return (<StyledSeatBtn isAvailable={seat.isAvailable} key={seat.name} onClick={()=>markSeat(seat)}>{seat.name}</StyledSeatBtn>)
                 })}
             </SeatsContainer>
-            
+
         </StyledSession>
     )
 }
