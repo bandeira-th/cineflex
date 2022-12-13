@@ -4,48 +4,50 @@ import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import seatsObj from "../seatsObj"
 import { AZULCLARO, AMARELOCLARO } from "../constants/colors.js"
+import Seat from "./Seat"
 
 export default function Session({session, setSession}) {
     const [seats, setSeats] = useState([])
     const [selectedSeats, setSelectedSeats] = useState([])
     const [costumerName, setCostumerName] = useState("")
     const [constumerCPF, setCostumerCPF] = useState("")
-    const [unavailableSeats, setUnavailableSeats] = useState([])
+    const [takenSeats, setTakenSeats] = useState([])
+    const [postInfo, setPostInfo] = useState({})
  
     const {idSessao} = useParams()
 
-    const takenseats = []
-
     useEffect(()=>{
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`)
-        promisse.then(res => {setSession(res.data); setSeats(res.data.seats)})
+        promisse.then(res => {setSession(res.data)}).then(setSeats(session.seats))
         promisse.catch(err => console.log(err))
     },[])
-
-
-
-    function markSeat(seat){
-        if(!seat.isAvailable){
-            alert("not")
-        } else if (seat.isAvailable){
-            const newSeats = [...selectedSeats]
-            setSelectedSeats([...newSeats, seat.name])
-        }
-
-    }
-
-
 
     if (session === undefined){
         return <h1>Carregando...</h1>
     } 
+    
+ 
+
+    function handleSeats (clickedSeat){
+        if (clickedSeat.isAvailable === false) {
+            alert("Este assento não está disponível")
+            return;
+          }
+        if(clickedSeat.isAvailable){
+            const filteredSeats = selectedSeats.filter((s) => !(s.id === clickedSeat.id));
+            setSelectedSeats([...filteredSeats]);
+        } else {
+            setSelectedSeats([])
+        }
+        
+    }
 
     return (
         <StyledSession>
             <h1>Selecione os assentos</h1>
             <SeatsContainer>
                 {seats.map((seat)=>{
-                    return (<StyledSeatBtn isAvailable={seat.isAvailable} key={seat.name} onClick={()=>markSeat(seat)}>{seat.name}</StyledSeatBtn>)
+                    return (<Seat seat={seat} handleSeats={handleSeats}/>)
                 })}
             </SeatsContainer>
 
@@ -83,11 +85,3 @@ const SeatsContainer = styled.div`
    
 `
 
-const StyledSeatBtn = styled.button`
-        width: 26px;
-        height: 26px;
-        border-radius: 50%;
-        border: 1px solid;
-        background-color: ${props => props.isAvailable? AZULCLARO : AMARELOCLARO};
-
-`
