@@ -1,27 +1,58 @@
 import styled from "styled-components"
+import { useEffect, useState } from "react"
+import { AZULMAISCLARO, TEALCLARO, AMARELOCLARO, AZULCLARO, TEALESCURO  } from "../constants/colors"
 
 
 
+export default function Seat({seat, isSelected, handleSeats}) {
+    const [status, setStatus] = useState("disponível")
+    useEffect(() => {
+      if (isSelected) {
+          setStatus("selecionado")
+      } else if (seat.isAvailable) {
+          setStatus("disponível")
+      } else {
+          setStatus("indisponível")
+      }
+  }, [isSelected])
 
-export default function Seat({seat, handleSeat}) {
-    <>
-    {!seat.selected ? (
-      <StyledSeat className={`seat ${seat.status}`} onClick={() => handleSeat(seat)}>
-        {seat.id}
-      </StyledSeat>
-    ) : (
-      <StyledSeat className={`seat selected`} onClick={() => handleSeat(seat)}>
-        {seat.id}
-      </StyledSeat>
-    )}
-  </>
+  return(
+    <StyledSeat status={status} onClick={() => handleSeats(seat)}>
+      {seat.name}
+    </StyledSeat>
+  )
+
+
+}
+    
+
 
 
 const StyledSeat = styled.button`
         width: 26px;
         height: 26px;
         border-radius: 50%;
-        border: 1px solid;
-        background-color: ${props => props.isAvailable? AZULCLARO : AMARELOCLARO};
+        border: 1px solid ${props => {switch(props.status){ 
+                                          case "disponível":
+                                            return AZULCLARO;
+                                          case "selecionado":
+                                            return TEALESCURO;
+                                          case "indisponível":
+                                            return AMARELOCLARO
+                                          
+                                          }
+                                        }
+                                      };
+        background-color: ${props => {switch(props.status){ 
+                                          case "disponível":
+                                            return AZULMAISCLARO;
+                                          case "selecionado":
+                                            return TEALCLARO;
+                                          case "indisponível":
+                                            return AMARELOCLARO
+                                          
+                                          }
+                                        }
+                                      }
 
 `

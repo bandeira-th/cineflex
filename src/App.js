@@ -8,10 +8,12 @@ import Showtimes from "./components/Showtimes";
 import Session from "./components/Session";
 
 
+
 export default function App() {
   const [movies, setMovies] = useState([])
   const [showtimes, setShowTimes] = useState(undefined)
   const [session, setSession] = useState(undefined)
+  const [successInfo, setSuccessInfo] = useState({})
   
   
   
@@ -41,9 +43,11 @@ export default function App() {
           <Route 
           path="/session/:idSessao" 
           element={<Session setSession={setSession} 
-          session={session}/>}
+          session={session} setSuccessInfo={setSuccessInfo}/>}
            
           />
+
+      
         </Routes>
       </StyledApp>
     </BrowserRouter>
