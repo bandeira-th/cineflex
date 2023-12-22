@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# CINEFLEX IS A MOVIE'S TICKET RESERVATION APP
+![01](https://github.com/bandeira-th/cineflex/assets/83191364/0f005596-b3cd-4ff2-9dd7-52406b63ed16)
+![02](https://github.com/bandeira-th/cineflex/assets/83191364/ef053814-da02-4d03-980f-aefa546658d0)
+![03](https://github.com/bandeira-th/cineflex/assets/83191364/b623fef5-6aa6-421a-ba22-812674a691ab)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
